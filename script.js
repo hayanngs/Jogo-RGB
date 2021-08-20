@@ -2,6 +2,8 @@ var root = document.documentElement;
 var bola = [];
 var truu;
 
+var confirm = false;
+
 var textoCor = document.getElementById("textoCor");
 var texto = document.getElementById("p_text");
 var resultado = document.getElementById("resultado");
@@ -20,7 +22,6 @@ start();
 
 function start() {
     setColor();
-
     acertos = 0;
     resultado.textContent = acertos.toString();
 }
@@ -46,27 +47,33 @@ function setColor() {
     root.style.setProperty('--cor5', bola[5]);
     root.style.setProperty('--cor6', '#FFFFFF');
     textoCor.textContent = truu
+
+    confirm = true;
 }
 
 function verificaBola(i) {
-    if (bola[i] === truu)
-    {
-        texto.textContent = "CORRECT!";
-        acertos++;
-        resultado.textContent = acertos.toString();
-        root.style.setProperty('--cor6', truu);
-        var timer = setTimeout(function() { 
-            texto.textContent = "PICK A COLOR";
-            setColor();
-        }, 1500)
-    }
-    else
-    {
-        texto.textContent = "WRONG ANSWER, TRY AGAIN!";
-        resultado.textContent = acertos.toString();
-        var timer = setTimeout(function() { 
-            texto.textContent = "PICK A COLOR";
-        }, 1500)
+
+    if (confirm) {
+        if (bola[i] === truu)
+        {
+            confirm = false;
+            texto.textContent = "CORRECT!";
+            acertos++;
+            resultado.textContent = acertos.toString();
+            root.style.setProperty('--cor6', truu);
+            var timer = setTimeout(function() {
+                texto.textContent = "PICK A COLOR";
+                setColor();
+            }, 1500)
+        }
+        else
+        {
+            texto.textContent = "WRONG ANSWER, TRY AGAIN!";
+            resultado.textContent = acertos.toString();
+            var timer = setTimeout(function() {
+                texto.textContent = "PICK A COLOR";
+            }, 1500)
+        }
     }
 }
 
